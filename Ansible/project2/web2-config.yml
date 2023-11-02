@@ -1,0 +1,40 @@
+---
+- name: Configure Apache and Firewalld on web2
+  hosts: web2
+  become: yes
+  tasks:
+    - name: Install httpd package
+      yum:
+        name: httpd
+        state: present
+
+    - name: Start and enable httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+
+    - name: Install firewalld package
+      yum:
+        name: firewalld
+        state: present
+
+    - name: Start and enable firewalld service
+      service:
+        name: firewalld
+        state: started
+        enabled: yes
+
+    - name: Update Apache port to 8082
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^Listen 80'
+        line: 'Listen 8082'
+
+    - name: Add a firewall rule to allow incoming traffic on port 8082
+      command: firewall-cmd --permanent --zone=public --add-port=8082/tcp
+      changed_when: false
+
+    - name: Reload firewall
+      command: firewall-cmd --reload
+#ansible-playbook -i /home/thor/playbooks/inventory /home/thor/playbooks/web2-config.yml
