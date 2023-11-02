@@ -1,0 +1,16 @@
+---
+- name: Extract data.tar.gz and remove archive
+  hosts: web1
+  become: yes
+  tasks:
+    - name: Extract data.tar.gz to /srv
+      unarchive:
+        src: /root/data.tar.gz
+        dest: /srv
+        copy: no
+
+    - name: Remove data.tar.gz archive
+      file:
+        path: /root/data.tar.gz
+        state: absent
+#ansible-playbook -i /home/thor/playbooks/inventory /home/thor/playbooks/data.yml

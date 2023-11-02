@@ -1,0 +1,14 @@
+---
+- name: Extract contents of local.zip on web1 node
+  hosts: web1
+  become: yes
+  tasks:
+    - name: Copy local.zip to the remote node
+      copy:
+        src: /home/thor/playbooks/local.zip
+        dest: /tmp/local.zip
+        mode: 0644
+
+    - name: Unzip local.zip on the remote node
+      command: unzip /tmp/local.zip -d /tmp/
+#ansible-playbook -i /home/thor/playbooks/inventory /home/thor/playbooks/local.yml
