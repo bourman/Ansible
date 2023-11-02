@@ -1,0 +1,9 @@
+---
+- name: Install Apache HTTP Server (httpd) on web1
+  hosts: web1
+  become: yes
+  tasks:
+    - name: Install httpd package
+      yum:
+        name: httpd
+        state: present

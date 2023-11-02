@@ -1,0 +1,13 @@
+---
+- name: Install wget from RPM
+  hosts: web1
+  become: yes
+  tasks:
+    - name: Download the wget RPM
+      get_url:
+        url: http://mirror.centos.org/centos/7/os/x86_64/Packages/wget-1.14-18.el7_6.1.x86_64.rpm
+        dest: /tmp/wget.rpm
+
+    - name: Install wget package from RPM
+      command: yum localinstall -y /tmp/wget.rpm
+#ansible-playbook -i /home/thor/playbooks/inventory /home/thor/playbooks/wget.yml
