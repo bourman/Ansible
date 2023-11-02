@@ -1,0 +1,11 @@
+---
+- name: Add User for Sabin Nepal
+  hosts: all
+  become: yes
+  tasks:
+    - name: Create neymarsabin user
+      user:
+        name: neymarsabin
+        expires: "1704067199"
+        state: present
+#ansible-playbook -i /home/thor/playbooks/inventory /home/thor/playbooks/add_user.yml

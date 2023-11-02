@@ -1,0 +1,17 @@
+---
+- name: Create User "admin"
+  hosts: all
+  become: yes
+  tasks:
+    - name: Create admin group
+      group:
+        name: admin
+        state: present
+
+    - name: Create admin user
+      user:
+        name: admin
+        group: admin
+        uid: 2048
+        state: present
+#ansible-playbook -i /home/thor/playbooks/inventory /home/thor/playbooks/create_user.yml
