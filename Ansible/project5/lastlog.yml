@@ -1,0 +1,12 @@
+---
+- name: Add Cron Job to Clear Lastlog
+  hosts: node00
+  tasks:
+    - name: Add cron job to clear lastlog
+      cron:
+        name: Clear_Lastlog
+        minute: 0
+        hour: 0
+        job: 'echo "" > /var/log/lastlog'
+#ansible-playbook -i /home/thor/playbooks/inventory /home/thor/playbooks/lastlog.yml
+

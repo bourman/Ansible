@@ -1,0 +1,11 @@
+---
+- name: Add Cron Job to Execute free.sh
+  hosts: node00
+  tasks:
+    - name: Add cron job to execute free.sh
+      cron:
+        name: Free_Memory_Check
+        minute: "0"
+        hour: "*/2"
+        job: "sh /root/free.sh"
+#ansible-playbook -i /home/thor/playbooks/inventory /home/thor/playbooks/script_cron.yml

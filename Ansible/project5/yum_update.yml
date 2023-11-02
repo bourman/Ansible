@@ -1,0 +1,28 @@
+---
+- name: Schedule YUM Updates
+  hosts: node00
+  tasks:
+    - name: Create yum update cron file
+      template:
+        src: ansible_yum.j2
+        dest: /etc/cron.d/ansible_yum
+      notify:
+        - Reload cron
+      when: ansible_distribution_major_version is defined
+
+    - name: Set permissions for the cron file
+      file:
+        path: /etc/cron.d/ansible_yum
+        owner: root
+        group: root
+        mode: "0644"
+      when: ansible_distribution_major_version == "7" and ansible_distribution_major_version is defined
+
+  handlers:
+    - name: Reload cron
+      service:
+        name: crond
+        state: reloaded
+#Create a file jinja2
+## Ansible managed
+#5 8 * * 7 root yum -y update

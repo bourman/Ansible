@@ -1,0 +1,10 @@
+---
+- name: Add Cron Job for Cleanup on Reboot
+  hosts: node00
+  tasks:
+    - name: Add cron job for cleanup on reboot
+      cron:
+        name: cleanup
+        special_time: reboot
+        job: "rm -rf /tmp/*"
+#ansible-playbook -i /home/thor/playbooks/inventory /home/thor/playbooks/reboot.yml

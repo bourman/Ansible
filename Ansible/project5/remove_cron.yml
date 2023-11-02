@@ -1,0 +1,9 @@
+---
+- name: Remove old cron Job
+  hosts: node00
+  tasks:
+    - name: Remove old cron job
+      cron:
+        name: "Checking Memory"
+        state: absent
+#ansible-playbook -i /home/thor/playbooks/inventory /home/thor/playbooks/remove_cron.yml
