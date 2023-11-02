@@ -1,0 +1,2 @@
+[web2]
+172.20.1.101 ansible_user=root ansible_password=Passw0rd
