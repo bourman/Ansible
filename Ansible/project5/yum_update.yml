@@ -26,3 +26,4 @@
 #Create a file jinja2
 ## Ansible managed
 #5 8 * * 7 root yum -y update
+#ansible-playbook -i /home/thor/playbooks/inventory /home/thor/playbooks/yum_update.yml
