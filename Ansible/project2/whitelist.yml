@@ -5,8 +5,9 @@
   tasks:
     - name: Add IP to the internal zone
       command: firewall-cmd --zone=internal --add-source=172.20.1.101 --permanent
-      changed_when: "firewall-cmd --zone=internal --add-source=172.20.1.101 --permanent | grep success"
+      changed_when: false
 
     - name: Reload firewall
       command: firewall-cmd --reload
+
 #ansible-playbook -i /home/thor/playbooks/inventory /home/thor/playbooks/whitelist.yml
