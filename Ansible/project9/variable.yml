@@ -1,0 +1,7 @@
+---
+- name: Run Shell Task with DNS Server Variable
+  hosts: all
+  tasks:
+    - name: Run Shell Task
+      shell: "echo 'DNS Server: {{ hostvars['node01.host']['dns_server'] }}' > /tmp/variable.txt"
+#ansible-playbook -i ~/playbooks/inventory ~/playbooks/variable.yml
