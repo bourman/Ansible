@@ -1,0 +1,12 @@
+# generate-agent-info.yml
+# cd playbooks/moitoring-server/
+#adding the j2 file in the same directory..
+---
+- name: Generate agents.conf
+  hosts: monitoring_server
+  gather_facts: no # We don't need to gather facts from the target servers
+  tasks:
+    - name: Generate agents.conf
+      template:
+        src: "agents.conf.j2"
+        dest: "/etc/monitor/agents.conf"

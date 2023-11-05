@@ -1,0 +1,13 @@
+upstream web_servers {
+    {% for host in groups['web'] %}
+    server {{ hostvars[host]['ansible_host'] }}:80;
+    {% endfor %}
+}
+
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://web_servers;
+    }
+}

@@ -1,0 +1,23 @@
+---
+- name: Configure Load Balancer
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Create the target directory if it doesn't exist
+      file:
+        path: /etc/nginx/conf.d
+        state: directory
+      become: yes
+
+    - name: Generate load-balancer.conf
+      template:
+        src: "templates/load-balancer.conf.j2"
+        dest: "/etc/nginx/conf.d/load-balancer.conf"
+      notify: Reload Nginx
+      become: yes
+
+  handlers:
+    - name: Reload Nginx
+      service:
+        name: nginx #update this with the correct service (name)
+        state: reloaded
