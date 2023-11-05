@@ -1,0 +1,14 @@
+---
+- name: Get OS Info and Save to File
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Get OS Info
+      set_fact:
+        os_info: "{{ ansible_distribution }} {{ ansible_distribution_version }}"
+
+    - name: Save OS Info to File
+      copy:
+        content: "{{ os_info }}"
+        dest: /tmp/output.txt
+#ansible-playbook -i /home/thor/playbooks/inventory /home/thor/playbooks/help_me_fix_it.yml

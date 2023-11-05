@@ -1,0 +1,12 @@
+---
+- name: Get Uptime of Remote Hosts
+  hosts: all
+  tasks:
+    - name: Get Uptime
+      command: uptime
+      register: uptime_result
+
+    - name: Display Uptime
+      debug:
+        var: uptime_result.stdout
+#ansible-playbook -i /home/thor/playbooks/inventory /home/thor/playbooks/uptime.yml
