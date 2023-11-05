@@ -1,0 +1,61 @@
+---
+- name: Install Common Dependencies on Web and DB Servers
+  hosts: web_servers:db_servers
+  become: true
+
+  tasks:
+    - name: Install libselinux-python
+      package:
+        name: libselinux-python
+        state: present
+
+    - name: Install libsemanage-python
+      package:
+        name: libsemanage-python
+        state: present
+
+    - name: Install firewalld
+      package:
+        name: firewalld
+        state: present
+
+- name: Configure MariaDB on lamp-db
+  hosts: db_servers # Only target the lamp-db server
+  become: true
+
+  tasks:
+    - name: Install MariaDB Server and MySQL-Python
+      package:
+        name:
+          - mariadb-server
+          - MySQL-python
+        state: present
+
+    - name: Copy MySQL Configuration file
+      copy:
+        src: files/my.cnf
+        dest: /etc/my.cnf
+        mode: 0644 # Ensure proper permissions for the configuration file
+
+    - name: Start and enable mariadb service
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+    - name: Start and enable firewalld service
+      service:
+        name: firewalld
+        state: started
+        enabled: yes
+
+    - name: Insert firewalld rule to allow MySQL port 3306
+      firewalld:
+        service: mysql
+        permanent: yes
+        state: enabled
+        immediate: yes
+#ansible-playbook ~/playbooks/lamp-stack-playbooks/deploy-lamp-stack.yml --syntax-check
+#ansible-playbook ~/playbooks/lamp-stack-playbooks/deploy-lamp-stack.yml --check
+#ansible-playbook ~/playbooks/lamp-stack-playbooks/deploy-lamp-stack.yml
+

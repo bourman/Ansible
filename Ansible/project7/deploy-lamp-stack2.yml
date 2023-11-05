@@ -1,0 +1,31 @@
+---
+- name: Configure MariaDB Database and Load Data on lamp-db
+  hosts: lamp-db
+  become: yes
+  tasks:
+    - name: Create Application Database
+      mysql_db:
+        name: "{{ dbname }}"
+        state: present
+
+    - name: Create Application Database User
+      mysql_user:
+        name: "{{ dbuser }}"
+        password: "{{ dbpassword }}"
+        host: 172.20.1.100
+        priv: "*.*:ALL"
+        state: present
+
+    - name: Copy db-load-script.sql to /tmp directory
+      copy:
+        src: files/db-load-script.sql
+        dest: /tmp/db-load-script.sql
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Load Inventory Data
+      command: mysql -f < /tmp/db-load-script.sql
+      args:
+        executable: /bin/bash
+        chdir: /tmp
