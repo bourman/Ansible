@@ -20,7 +20,7 @@
         state: present
 
 - name: Configure MariaDB on lamp-db
-  hosts: db_servers # Only target the lamp-db server
+  hosts: db_servers #only target the lamp-db server
   become: true
 
   tasks:
@@ -35,7 +35,7 @@
       copy:
         src: files/my.cnf
         dest: /etc/my.cnf
-        mode: 0644 # Ensure proper permissions for the configuration file
+        mode: 0644 #permissions for the configuration files
 
     - name: Start and enable mariadb service
       service:
