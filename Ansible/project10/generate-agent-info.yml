@@ -4,7 +4,7 @@
 ---
 - name: Generate agents.conf
   hosts: monitoring_server
-  gather_facts: no # We don't need to gather facts from the target servers
+  gather_facts: no 
   tasks:
     - name: Generate agents.conf
       template:
