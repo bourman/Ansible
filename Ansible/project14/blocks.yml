@@ -1,0 +1,13 @@
+---
+- hosts: all
+  tasks:
+    - name: Install and configure httpd web server
+      block:
+        - yum:
+            name: httpd
+            state: latest
+        - service:
+            name: httpd
+            state: started
+#ansible-playbook -i ~/playbooks/inventory ~/playbooks/blocks.yml
+#ansible-playbook -i ~/playbooks/inventory ~/playbooks/blocks.yml --list-tags
