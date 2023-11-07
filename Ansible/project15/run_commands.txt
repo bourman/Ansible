@@ -1,0 +1,1 @@
+ansible-galaxy install git+https://github.com/arillso/ansible.logrotate --roles-path ~/playbooks/roles

@@ -1,0 +1,23 @@
+task 1 : 
+Write a playbook /home/thor/playbooks/install_from_source.yml to install a tool: mosh from the source:https://github.com/mobile-shell/mosh on all
+servers (Server details are specified inside the inventory file named /home/thor/playbooks/inventory).
+A normal install from source flow is:
+git clone https://github.com/mobile-shell/mosh
+cd mosh
+./autogen.sh
+scl enable devtoolset-7 -- ./configure
+scl enable devtoolset-7 -- make && make install
+
+
+
+task 2 :
+Write a playbook ~/playbooks/logrotate.yml to configure log-rotation on remote hosts.
+Complete the following tasks
+Grab the module from GitHub: https://github.com/arillso/ansible.logrotate
+Use ansible-galaxy install command to install inside the /home/thor/playbooks/roles
+If you stumbled upon the issue, could not find/use git, install git in the ansible-runner first and install the role.
+Configure your log rotation rules as:
+daily
+rotate 3
+compress
+…to rotate a log file that would present on location /var/log/myapp.log
