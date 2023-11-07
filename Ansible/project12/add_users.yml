@@ -1,0 +1,44 @@
+---
+- name: Add users to node00
+  hosts: node00
+  become: true #(sudo)
+
+  tasks:
+    - name: Ensure home directories for developers
+      user:
+        name: "{{ item }}"
+        home: "/var/www"
+        state: present
+      with_items: "{{ developers }}"
+      when: "'developers' in group_names"
+
+    - name: Ensure home directories for admins
+      user:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ admins }}"
+      when: "'admins' in group_names"
+
+    - name: Encrypt and set developer passwords
+      user:
+        name: "{{ item }}"
+        password: "{{ developer_password }}"
+      with_items: "{{ developers }}"
+      when: "'developers' in group_names"
+
+    - name: Encrypt and set admin passwords
+      user:
+        name: "{{ item }}"
+        password: "{{ admin_password }}"
+      with_items: "{{ admins }}"
+      when: "'admins' in group_names"
+
+    - name: Add admin users to the wheel group
+      user:
+        name: "{{ item }}"
+        groups: wheel
+      with_items: "{{ admins }}"
+      when: "'admins' in group_names"
+#ansible-playbook -i ~/playbooks/inventory ~/playbooks/add_users.yml --vault-password-file ~/playbooks/secrets/vault.txt --check
+#ansible-playbook -i ~/playbooks/inventory ~/playbooks/add_users.yml --vault-password-file ~/playbooks/secrets/vault.txt --check --diff
+#ansible-playbook -i ~/playbooks/inventory ~/playbooks/add_users.yml --vault-password-file ~/playbooks/secrets/vault.txt

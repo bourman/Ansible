@@ -1,0 +1,2 @@
+ansible-vault encrypt_string 'd3v3l0p3r'
+ansible-vault encrypt_string 'adm$n$'
